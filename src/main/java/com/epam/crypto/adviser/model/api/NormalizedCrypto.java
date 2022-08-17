@@ -1,4 +1,4 @@
-package com.epam.crypto.adviser.model;
+package com.epam.crypto.adviser.model.api;
 
 import lombok.Builder;
 import lombok.Value;

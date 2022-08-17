@@ -1,10 +1,10 @@
 package com.epam.crypto.adviser.controller;
 
-import com.epam.crypto.adviser.model.NormalizedCrypto;
-import com.epam.crypto.adviser.model.NormalizedCryptosRequest;
-import com.epam.crypto.adviser.model.NormalizedCryptosResponse;
-import com.epam.crypto.adviser.model.CryptoDescriptionRequest;
-import com.epam.crypto.adviser.model.CryptoDescriptionResponse;
+import com.epam.crypto.adviser.model.api.NormalizedCrypto;
+import com.epam.crypto.adviser.model.api.NormalizedCryptosRequest;
+import com.epam.crypto.adviser.model.api.NormalizedCryptosResponse;
+import com.epam.crypto.adviser.model.api.CryptoDescriptionRequest;
+import com.epam.crypto.adviser.model.api.CryptoDescriptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
