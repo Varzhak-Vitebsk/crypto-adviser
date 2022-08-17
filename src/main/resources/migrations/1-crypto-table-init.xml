@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+  <changeSet id="crypto-table-init" author="vbalyka">
+    <createTable tableName="crypto">
+      <column name="id" type="bigserial" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="crypto_id_pk"/>
+      </column>
+      <column name="name" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="supported" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="create_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="update_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

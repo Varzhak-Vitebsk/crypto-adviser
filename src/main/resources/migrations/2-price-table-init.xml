@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+  <changeSet id="price-table-init" author="vbalyka">
+    <createTable tableName="price">
+      <column name="id" type="bigserial" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="price_id_pk"/>
+      </column>
+      <column name="crypto_id" type="bigint">
+        <constraints references="crypto(id)" foreignKeyName="crypto_id_fk"/>
+      </column>
+      <column name="price_timestamp" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="price" type="decimal">
+        <constraints nullable="false"/>
+      </column>
+      <column name="create_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="update_date" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>
