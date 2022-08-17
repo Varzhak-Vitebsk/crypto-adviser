@@ -1,6 +1,7 @@
 package com.epam.crypto.adviser.service;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
+import com.epam.crypto.adviser.model.CSVRecordParsingContext;
 import com.epam.crypto.adviser.model.CSVRecordValidationContext;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,9 @@ public class CryptoEntityParser implements CSVRecordParser<CryptoEntity> {
   private static final Set<String> MANDATORY_FIELDS = Set.of(NAME_FIELD, SUPPORTED_STATUS_FIELD);
   private final CSVRecordValidator recordValidator;
   @Override
-  public CryptoEntity parse(CSVRecord source) {
+  public CryptoEntity parse(CSVRecordParsingContext parsingContext) {
+
+    var source = parsingContext.getSource();
 
     if (recordValidator.isInvalid(makeContext(source))) {
       throw new CsvParseException("One of mandatory or not blank fields is absent or blank!");

@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @UtilityClass
 public class CSVUtils {
@@ -20,5 +21,9 @@ public class CSVUtils {
 
   public static BigDecimal parseStringToBigDecimal(String value) {
     return BigDecimal.valueOf(Double.parseDouble(value));
+  }
+
+  public static Instant parseStringToInstant(String value) {
+    return Instant.ofEpochMilli(Long.parseLong(value));
   }
 }

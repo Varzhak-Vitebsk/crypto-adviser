@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(path = "/api/private/v1/upload/from/csv", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface CSVUploadControllerV1 {
 
-  @Operation(summary = "Upload information about crypto currency using *.csv file.")
+  @Operation(summary = "Upload information about crypto pricing using *.csv file.")
   @ApiResponse(responseCode = "200", description = "Uploaded successfully.")
   @PostMapping(value = "crypto/price")
   ResponseEntity<Void> uploadCryptoPrices(@RequestParam("file") MultipartFile file);

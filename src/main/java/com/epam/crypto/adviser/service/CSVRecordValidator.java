@@ -3,8 +3,10 @@ package com.epam.crypto.adviser.service;
 import com.epam.crypto.adviser.model.CSVRecordValidationContext;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 import java.util.Set;
 
+@Service
 public class CSVRecordValidator implements Validator<CSVRecordValidationContext> {
 
   @Override

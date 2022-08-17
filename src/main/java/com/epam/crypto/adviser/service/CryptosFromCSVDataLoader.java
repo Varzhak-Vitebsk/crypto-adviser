@@ -2,6 +2,7 @@ package com.epam.crypto.adviser.service;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
 import com.epam.crypto.adviser.exception.SourceFileNotInCSVFormatException;
+import com.epam.crypto.adviser.model.CryptoCSVRecordParsingContext;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CryptosFromCSVDataLoader implements DataLoader {
 
   private final CSVFileValidator csvFileValidator;
-  private final CSVRecordParser<CryptoEntity> cryptoEntityCSVRecordParser;
+  private final CryptoEntityParser cryptoEntityParser;
   private final CryptoRepositoryService cryptoRepositoryService;
 
   @Override
@@ -55,13 +56,19 @@ public class CryptosFromCSVDataLoader implements DataLoader {
     for (CSVRecord csvRecord : records) {
       CryptoEntity parsedCrypto;
       try {
-        parsedCrypto = cryptoEntityCSVRecordParser.parse(csvRecord);
+        parsedCrypto = cryptoEntityParser.parse(makeContext(csvRecord));
       } catch (CsvParseException e) {
         log.error("Failed to parse crypto record {}: {}", csvRecord, e.getMessage());
         continue;
       }
       cryptoRepositoryService.updateOrCreate(parsedCrypto);
     }
+  }
+
+  private CryptoCSVRecordParsingContext makeContext(CSVRecord source) {
+    return CryptoCSVRecordParsingContext.builder()
+        .source(source)
+        .build();
   }
 
 }
