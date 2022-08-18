@@ -1,38 +1,36 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.loader;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
-import com.epam.crypto.adviser.exception.SourceFileNotInCSVFormatException;
 import com.epam.crypto.adviser.model.PriceCSVRecordParsingContext;
+import com.epam.crypto.adviser.service.CryptoRepositoryService;
+import com.epam.crypto.adviser.service.PriceRepositoryService;
+import com.epam.crypto.adviser.service.parser.PriceEntityParser;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
 import com.epam.crypto.adviser.storage.model.PriceEntity;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class CryptoPricesFromCSVDataLoader implements DataLoader {
 
-  private final CSVFileValidator csvFileValidator;
   private final PriceEntityParser priceEntityParser;
   private final PriceRepositoryService priceRepositoryService;
   private final CryptoRepositoryService cryptoRepositoryService;
 
   @Override
   public void uploadData(MultipartFile file) {
-    if (csvFileValidator.isInvalid(file)) {
-      throw new SourceFileNotInCSVFormatException("Uploaded file is not in SCV format");
-    }
     try {
       Reader reader = getReader(file);
       loadPrices(reader);

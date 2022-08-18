@@ -1,10 +1,9 @@
 package com.epam.crypto.adviser.utility;
 
-import lombok.experimental.UtilityClass;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.math.BigDecimal;
 import java.time.Instant;
+import lombok.experimental.UtilityClass;
+import org.springframework.web.multipart.MultipartFile;
 
 @UtilityClass
 public class CSVUtils {

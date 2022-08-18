@@ -35,6 +35,9 @@ spring:
     max-in-memory-size: 1048576
     max-request-size: 4400390
 
+price:
+  scale: 6
+
 logging:
   level:
     com.epam: ${LOGGING_LEVEL_COM_EPAM:DEBUG}

@@ -1,8 +1,9 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.loader;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
-import com.epam.crypto.adviser.exception.SourceFileNotInCSVFormatException;
 import com.epam.crypto.adviser.model.CryptoCSVRecordParsingContext;
+import com.epam.crypto.adviser.service.CryptoRepositoryService;
+import com.epam.crypto.adviser.service.parser.CryptoEntityParser;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,15 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class CryptosFromCSVDataLoader implements DataLoader {
 
-  private final CSVFileValidator csvFileValidator;
   private final CryptoEntityParser cryptoEntityParser;
   private final CryptoRepositoryService cryptoRepositoryService;
 
   @Override
   public void uploadData(MultipartFile file) {
-    if (csvFileValidator.isInvalid(file)) {
-      throw new SourceFileNotInCSVFormatException("Uploaded file is not in SCV format");
-    }
     try {
       Reader reader = getReader(file);
       loadCryptos(reader);

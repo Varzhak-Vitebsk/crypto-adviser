@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 @Getter
 @SuperBuilder
 public abstract class CSVRecordParsingContext {
+
   private final CSVRecord source;
 
 }

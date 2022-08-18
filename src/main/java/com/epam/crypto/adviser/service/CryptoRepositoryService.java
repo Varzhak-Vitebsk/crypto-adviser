@@ -2,9 +2,9 @@ package com.epam.crypto.adviser.service;
 
 import com.epam.crypto.adviser.storage.CryptoRepository;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -12,7 +12,7 @@ public class CryptoRepositoryService {
 
   private final CryptoRepository repository;
 
-  void updateOrCreate(CryptoEntity entityUpdate) {
+  public void updateOrCreate(CryptoEntity entityUpdate) {
     var entity = repository.findByName(entityUpdate.getName())
         .map(cryptoEntity -> {
           cryptoEntity.setSupported(entityUpdate.isSupported());
@@ -21,7 +21,7 @@ public class CryptoRepositoryService {
     repository.save(entity);
   }
 
-  List<CryptoEntity> getSupportedCryptos() {
+  public List<CryptoEntity> getSupportedCryptos() {
     return repository.getBySupportedIsTrue();
   }
 

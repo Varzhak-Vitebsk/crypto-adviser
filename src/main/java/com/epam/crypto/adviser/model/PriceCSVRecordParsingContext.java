@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 public final class PriceCSVRecordParsingContext extends CSVRecordParsingContext {
+
   private final List<CryptoEntity> supportedCryptos;
 
 }

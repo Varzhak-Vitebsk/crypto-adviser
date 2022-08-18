@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
 import com.epam.crypto.adviser.model.CryptoCSVRecordParsingContext;
+import com.epam.crypto.adviser.service.parser.CryptoEntityParser;
 import com.epam.crypto.adviser.service.utility.TestUtils;
+import com.epam.crypto.adviser.service.validator.CSVRecordValidator;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
 import java.io.IOException;
 import java.util.Set;

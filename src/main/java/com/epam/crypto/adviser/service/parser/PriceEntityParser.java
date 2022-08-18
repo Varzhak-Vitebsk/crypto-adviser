@@ -1,22 +1,23 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.parser;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
 import com.epam.crypto.adviser.exception.NotSupportedCryptoException;
 import com.epam.crypto.adviser.model.CSVRecordParsingContext;
 import com.epam.crypto.adviser.model.CSVRecordValidationContext;
 import com.epam.crypto.adviser.model.PriceCSVRecordParsingContext;
+import com.epam.crypto.adviser.service.validator.CSVRecordValidator;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
 import com.epam.crypto.adviser.storage.model.PriceEntity;
 import com.epam.crypto.adviser.utility.CSVUtils;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.csv.CSVRecord;
-import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class PriceEntityParser implements CSVRecordParser<PriceEntity> {
   private static final String PRICE_FIELD = "price";
   private static final Set<String> MANDATORY_FIELDS = Set.of(NAME_FIELD, TIMESTAMP_FIELD, PRICE_FIELD);
   private final CSVRecordValidator recordValidator;
+
   @Override
   public PriceEntity parse(CSVRecordParsingContext parsingContext) throws CsvParseException {
 

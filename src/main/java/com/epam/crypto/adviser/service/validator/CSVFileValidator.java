@@ -1,4 +1,4 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.validator;
 
 import com.epam.crypto.adviser.utility.CSVUtils;
 import org.springframework.stereotype.Service;

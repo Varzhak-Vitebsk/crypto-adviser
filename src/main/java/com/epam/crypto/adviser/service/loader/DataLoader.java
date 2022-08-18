@@ -1,4 +1,4 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.loader;
 
 import org.springframework.web.multipart.MultipartFile;
 

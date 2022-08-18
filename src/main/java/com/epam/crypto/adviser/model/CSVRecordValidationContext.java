@@ -1,9 +1,9 @@
 package com.epam.crypto.adviser.model;
 
+import java.util.Set;
 import lombok.Builder;
 import lombok.Value;
 import org.apache.commons.csv.CSVRecord;
-import java.util.Set;
 
 @Value
 @Builder

@@ -1,4 +1,4 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.validator;
 
 public interface Validator<T> {
 

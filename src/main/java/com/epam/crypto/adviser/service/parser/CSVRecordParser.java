@@ -1,4 +1,4 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.parser;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
 import com.epam.crypto.adviser.model.CSVRecordParsingContext;

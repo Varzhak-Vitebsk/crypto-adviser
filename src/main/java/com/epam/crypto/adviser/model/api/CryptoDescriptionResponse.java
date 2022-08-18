@@ -7,6 +7,7 @@ import lombok.Value;
 @Value
 @Builder
 public class CryptoDescriptionResponse {
+
   @Schema(name = "crypto", description = "Crypto name", example = "BTC")
   String crypto;
   @Schema(name = "oldest", description = "Oldest crypto values")

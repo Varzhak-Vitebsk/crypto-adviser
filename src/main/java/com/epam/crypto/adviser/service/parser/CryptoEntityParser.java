@@ -1,14 +1,15 @@
-package com.epam.crypto.adviser.service;
+package com.epam.crypto.adviser.service.parser;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
 import com.epam.crypto.adviser.model.CSVRecordParsingContext;
 import com.epam.crypto.adviser.model.CSVRecordValidationContext;
+import com.epam.crypto.adviser.service.validator.CSVRecordValidator;
 import com.epam.crypto.adviser.storage.model.CryptoEntity;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class CryptoEntityParser implements CSVRecordParser<CryptoEntity> {
   private static final String SUPPORTED_STATUS_FIELD = "Supported";
   private static final Set<String> MANDATORY_FIELDS = Set.of(NAME_FIELD, SUPPORTED_STATUS_FIELD);
   private final CSVRecordValidator recordValidator;
+
   @Override
   public CryptoEntity parse(CSVRecordParsingContext parsingContext) {
 
