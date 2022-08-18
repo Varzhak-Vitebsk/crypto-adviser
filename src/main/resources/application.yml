@@ -36,7 +36,7 @@ spring:
     max-request-size: 4400390
 
 price:
-  scale: 6
+  scale: ${SCALE_VALUE:6}
 
 logging:
   level:
