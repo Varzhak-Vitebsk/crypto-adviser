@@ -35,7 +35,7 @@ class CryptoRepositoryServiceTest {
         .build();
 
     //when findByName called - return entity
-    Mockito.when(repository.findByName(Mockito.eq(CRYPTO_NAME)))
+    Mockito.when(repository.findByName(CRYPTO_NAME))
         .thenReturn(Optional.of(CryptoEntity.builder()
             .name(CRYPTO_NAME)
             .supported(false)
@@ -63,7 +63,7 @@ class CryptoRepositoryServiceTest {
         .build();
 
     //when findByName called - return empty optional
-    Mockito.when(repository.findByName(Mockito.eq(CRYPTO_NAME)))
+    Mockito.when(repository.findByName(CRYPTO_NAME))
         .thenReturn(Optional.empty());
 
     service.updateOrCreate(source);

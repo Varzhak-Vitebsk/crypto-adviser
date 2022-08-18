@@ -30,10 +30,10 @@ class PriceEntityParserTest {
     try (var reader = TestUtils.reader("classpath:Price_no_symbol_field.csv")) {
       //Given: invalid record
       var records = TestUtils.loadResource(reader);
-
+      var context = makeContext(records.iterator().next(), getSupportedCryptos());
       //Then: service throws exception
       assertThrows(CsvParseException.class,
-          () -> parser.parse(makeContext(records.iterator().next(), getSupportedCryptos())));
+          () -> parser.parse(context));
     } catch (IOException ignored) {
     }
   }
@@ -43,10 +43,10 @@ class PriceEntityParserTest {
     try (var reader = TestUtils.reader("classpath:Price_no_timestamp.csv")) {
       //Given: invalid record
       var records = TestUtils.loadResource(reader);
-
+      var context = makeContext(records.iterator().next(), getSupportedCryptos());
       //Then: service throws exception
       assertThrows(CsvParseException.class,
-          () -> parser.parse(makeContext(records.iterator().next(), getSupportedCryptos())));
+          () -> parser.parse(context));
     } catch (IOException ignored) {
     }
   }
@@ -56,10 +56,10 @@ class PriceEntityParserTest {
     try (var reader = TestUtils.reader("classpath:Price_valid.csv")) {
       //Given: invalid record
       var records = TestUtils.loadResource(reader);
-
+      var context = makeContext(records.iterator().next(), null);
       //Then: service throws exception
       assertThrows(NotSupportedCryptoException.class,
-          () -> parser.parse(makeContext(records.iterator().next(), null)));
+          () -> parser.parse(context));
     } catch (IOException ignored) {
     }
   }
@@ -69,10 +69,10 @@ class PriceEntityParserTest {
     try (var reader = TestUtils.reader("classpath:Price_valid.csv")) {
       //Given: valid file
       var records = TestUtils.loadResource(reader);
-
+      var context = makeContext(records.iterator().next(), getSupportedCryptos());
       //Then: service returns parsed entity
       assertThat(makeExample()).usingRecursiveComparison()
-          .isEqualTo(parser.parse(makeContext(records.iterator().next(), getSupportedCryptos())));
+          .isEqualTo(parser.parse(context));
     } catch (IOException ignored) {
     }
   }

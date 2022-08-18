@@ -1,6 +1,7 @@
 package com.epam.crypto.adviser.controller;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
+import com.epam.crypto.adviser.exception.FileReadException;
 import com.epam.crypto.adviser.exception.InvalidRequestException;
 import com.epam.crypto.adviser.exception.NotSupportedCryptoException;
 import com.epam.crypto.adviser.exception.PriceNotFoundException;
@@ -27,6 +28,13 @@ public class GlobalExceptionHandler {
       HttpServletRequest request) {
     log.error(ERROR_MESSAGE, ex);
     return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
+  }
+
+  @ExceptionHandler({FileReadException.class})
+  public ResponseEntity<ErrorResponse> handleServerException(Exception ex,
+      HttpServletRequest request) {
+    log.error(ERROR_MESSAGE, ex);
+    return buildResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
   @ExceptionHandler({SourceFileNotInCSVFormatException.class, CsvParseException.class, BindException.class,

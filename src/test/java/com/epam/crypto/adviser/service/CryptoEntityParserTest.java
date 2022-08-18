@@ -23,9 +23,9 @@ class CryptoEntityParserTest {
     try (var reader = TestUtils.reader("classpath:Cryptos_no_name_field.csv")) {
       //Given: invalid record
       var records = TestUtils.loadResource(reader);
-
+      var context = makeContext(records.iterator().next());
       //Then: service throws exception
-      assertThrows(CsvParseException.class, () -> parser.parse(makeContext(records.iterator().next())));
+      assertThrows(CsvParseException.class, () -> parser.parse(context));
     } catch (IOException ignored) {
     }
   }
@@ -35,9 +35,9 @@ class CryptoEntityParserTest {
     try (var reader = TestUtils.reader("classpath:Cryptos_no_status.csv")) {
       //Given: invalid record
       var records = TestUtils.loadResource(reader);
-
+      var context = makeContext(records.iterator().next());
       //Then: service throws exception
-      assertThrows(CsvParseException.class, () -> parser.parse(makeContext(records.iterator().next())));
+      assertThrows(CsvParseException.class, () -> parser.parse(context));
     } catch (IOException ignored) {
     }
   }

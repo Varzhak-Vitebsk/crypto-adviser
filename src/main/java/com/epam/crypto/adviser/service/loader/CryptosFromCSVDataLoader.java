@@ -1,6 +1,7 @@
 package com.epam.crypto.adviser.service.loader;
 
 import com.epam.crypto.adviser.exception.CsvParseException;
+import com.epam.crypto.adviser.exception.FileReadException;
 import com.epam.crypto.adviser.model.CryptoCSVRecordParsingContext;
 import com.epam.crypto.adviser.service.CryptoRepositoryService;
 import com.epam.crypto.adviser.service.parser.CryptoEntityParser;
@@ -34,7 +35,7 @@ public class CryptosFromCSVDataLoader implements DataLoader {
     } catch (CsvParseException e) {
       throw new CsvParseException(e.getMessage() + ". File: " + file.getOriginalFilename());
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new FileReadException("File %s read failed!", file.getOriginalFilename(), e.getMessage());
     }
   }
 
