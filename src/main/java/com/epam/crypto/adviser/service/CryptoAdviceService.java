@@ -4,7 +4,6 @@ import com.epam.crypto.adviser.exception.NotSupportedCryptoException;
 import com.epam.crypto.adviser.exception.PriceNotFoundException;
 import com.epam.crypto.adviser.mapper.NormalizedCryptoMapper;
 import com.epam.crypto.adviser.mapper.PriceDtoToCryptoDescriptionMapper;
-import com.epam.crypto.adviser.model.api.CryptoDescription;
 import com.epam.crypto.adviser.model.api.CryptoDescriptionRequest;
 import com.epam.crypto.adviser.model.api.CryptoDescriptionResponse;
 import com.epam.crypto.adviser.model.api.NormalizedCrypto;
@@ -20,6 +19,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -33,21 +33,8 @@ public class CryptoAdviceService {
   private final PriceProperties priceProperties;
 
   public NormalizedCryptosResponse getNormalizedCryptos(NormalizedCryptosRequest request) {
-    var supportedCryptos = cryptoRepositoryService.getSupportedCryptos();
-    List<NormalizedCrypto> normalizedCryptos = new ArrayList<>();
-    for (var crypto : supportedCryptos) {
-      var from = localDateToUTCInstant(request.getDateFrom());
-      var to = localDateToUTCInstant(request.getDateTo());
-      var maxPrice = priceRepositoryService.getMaxPriceInRangeForCrypto(crypto, from, to);
-      var minPrice = priceRepositoryService.getMinPriceInRangeForCrypto(crypto, from, to);
-      if (maxPrice.isEmpty() || minPrice.isEmpty()) {
-        log.info("There is no {} prices between {} - {}", crypto.getName(), request.getDateFrom(), request.getDateTo());
-        continue;
-      }
-      normalizedCryptos.add(normalizedCryptoMapper.map(minPrice.get(), maxPrice.get(), priceProperties.getScale()));
-    }
     return NormalizedCryptosResponse.builder()
-        .cryptos(normalizedCryptos.stream().sorted(Comparator.comparing(NormalizedCrypto::getNormalizedPrice)).toList())
+        .cryptos(getNormalizedCryptosOrderedByPrice(request.getDateFrom(), request.getDateTo()))
         .build();
   }
 
@@ -83,16 +70,34 @@ public class CryptoAdviceService {
   }
 
   public NormalizedCrypto getBestCryptoForTheDate(LocalDate date) {
-    return NormalizedCrypto.builder().build();
+    var normalizedCryptos = getNormalizedCryptosOrderedByPrice(date, date.plusDays(1));
+    if (CollectionUtils.isEmpty(normalizedCryptos)) {
+      throw new PriceNotFoundException("There is no any crypto for the date %s", date);
+    }
+    return CollectionUtils.lastElement(normalizedCryptos);
   }
 
   private Instant localDateToUTCInstant(LocalDate date) {
     return date.atStartOfDay().toInstant(ZoneOffset.UTC);
   }
 
-  private CryptoDescription makeEmpty() {
-    return CryptoDescription.builder().build();
+  private List<NormalizedCrypto> getNormalizedCryptosOrderedByPrice(LocalDate dateFrom, LocalDate dateTo) {
+    var supportedCryptos = cryptoRepositoryService.getSupportedCryptos();
+    List<NormalizedCrypto> normalizedCryptos = new ArrayList<>();
+    for (var crypto : supportedCryptos) {
+      var from = localDateToUTCInstant(dateFrom);
+      var to = localDateToUTCInstant(dateTo);
+      var maxPrice = priceRepositoryService.getMaxPriceInRangeForCrypto(crypto, from, to);
+      var minPrice = priceRepositoryService.getMinPriceInRangeForCrypto(crypto, from, to);
+      if (maxPrice.isEmpty() || minPrice.isEmpty()) {
+        log.debug("There is no {} prices between {} - {}", crypto.getName(), dateFrom, dateTo);
+        continue;
+      }
+      normalizedCryptos.add(normalizedCryptoMapper.map(minPrice.get(), maxPrice.get(), priceProperties.getScale()));
+    }
+    return normalizedCryptos.stream()
+        .sorted(Comparator.comparing(NormalizedCrypto::getNormalizedPrice))
+        .toList();
   }
-
 
 }
