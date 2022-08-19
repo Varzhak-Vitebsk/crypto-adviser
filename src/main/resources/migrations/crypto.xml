@@ -1,0 +1,8 @@
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+  <include relativeToChangelogFile="true" file="1-crypto-table-init.xml"/>
+  <include relativeToChangelogFile="true" file="2-price-table-init.xml"/>
+</databaseChangeLog>
